@@ -86,7 +86,7 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Step indicator (students only) */}
+          {/* Step indicator — students only */}
           {form.role === "student" && (
             <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
               {[1, 2].map((s) => (
@@ -97,68 +97,130 @@ export default function Register() {
 
           <form onSubmit={submit}>
 
-            {/* ── STEP 1: Basic info (everyone) ── */}
-            {(step === 1 || form.role === "admin") && (
+            {/* ── ADMIN FORM ── */}
+            {form.role === "admin" && (
               <div>
                 <div style={{ marginBottom: 14 }}>
                   <label style={labelStyle}>Full Name *</label>
-                  <input name="name" value={form.name} onChange={set} required placeholder="Sharanya Thadisina" style={inputStyle}
+                  <input name="name" value={form.name} onChange={set} required
+                    placeholder="John Admin" style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
 
                 <div style={{ marginBottom: 14 }}>
                   <label style={labelStyle}>Email *</label>
-                  <input name="email" type="email" value={form.email} onChange={set} required placeholder="you@example.com" style={inputStyle}
+                  <input name="email" type="email" value={form.email} onChange={set} required
+                    placeholder="admin@hostel.com" style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = C.accent)}
+                    onBlur={(e)  => (e.target.style.borderColor = C.border)} />
+                </div>
+
+                {/* ── PHONE — admin only ── */}
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle}>Phone Number *</label>
+                  <input name="phone" value={form.phone} onChange={set} required
+                    placeholder="9876543210" maxLength={10} style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
 
                 <div style={{ marginBottom: 14 }}>
                   <label style={labelStyle}>Password *</label>
-                  <input name="password" type="password" value={form.password} onChange={set} required placeholder="Min 6 characters" style={inputStyle}
+                  <input name="password" type="password" value={form.password} onChange={set} required
+                    placeholder="Min 6 characters" style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
 
-                {form.role === "student" && (
-                  <div style={{ marginBottom: 14 }}>
-                    <label style={labelStyle}>Username *</label>
-                    <input name="username" value={form.username} onChange={set} required placeholder="sharanya123" style={inputStyle}
-                      onFocus={(e) => (e.target.style.borderColor = C.accent)}
-                      onBlur={(e)  => (e.target.style.borderColor = C.border)} />
-                  </div>
-                )}
+                <button type="submit" disabled={loading}
+                  style={{ width: "100%", padding: 13, marginTop: 8, background: loading ? C.border : "linear-gradient(135deg,#3b82f6,#6366f1)", border: "none", borderRadius: 12, color: "#fff", fontWeight: 700, fontSize: 15, cursor: loading ? "not-allowed" : "pointer" }}>
+                  {loading ? "Creating..." : "Create Admin Account →"}
+                </button>
               </div>
             )}
 
-            {/* ── STEP 2: Student details ── */}
+            {/* ── STUDENT STEP 1 ── */}
+            {form.role === "student" && step === 1 && (
+              <div>
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle}>Full Name *</label>
+                  <input name="name" value={form.name} onChange={set} required
+                    placeholder="Sharanya Thadisina" style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = C.accent)}
+                    onBlur={(e)  => (e.target.style.borderColor = C.border)} />
+                </div>
+
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle}>Email *</label>
+                  <input name="email" type="email" value={form.email} onChange={set} required
+                    placeholder="you@example.com" style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = C.accent)}
+                    onBlur={(e)  => (e.target.style.borderColor = C.border)} />
+                </div>
+
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle}>Username *</label>
+                  <input name="username" value={form.username} onChange={set} required
+                    placeholder="sharanya123" style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = C.accent)}
+                    onBlur={(e)  => (e.target.style.borderColor = C.border)} />
+                </div>
+
+                <div style={{ marginBottom: 14 }}>
+                  <label style={labelStyle}>Password *</label>
+                  <input name="password" type="password" value={form.password} onChange={set} required
+                    placeholder="Min 6 characters" style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = C.accent)}
+                    onBlur={(e)  => (e.target.style.borderColor = C.border)} />
+                </div>
+
+                <button type="button"
+                  onClick={() => {
+                    if (!form.name || !form.email || !form.password || !form.username) {
+                      setError("Please fill all required fields before continuing.");
+                      return;
+                    }
+                    setError("");
+                    setStep(2);
+                  }}
+                  style={{ width: "100%", padding: 13, marginTop: 8, background: "linear-gradient(135deg,#3b82f6,#6366f1)", border: "none", borderRadius: 12, color: "#fff", fontWeight: 700, fontSize: 15, cursor: "pointer" }}>
+                  Continue →
+                </button>
+              </div>
+            )}
+
+            {/* ── STUDENT STEP 2 ── */}
             {form.role === "student" && step === 2 && (
               <div>
                 <div style={{ marginBottom: 14 }}>
                   <label style={labelStyle}>Phone Number *</label>
-                  <input name="phone" value={form.phone} onChange={set} required placeholder="9876543210" maxLength={10} style={inputStyle}
+                  <input name="phone" value={form.phone} onChange={set} required
+                    placeholder="9876543210" maxLength={10} style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
 
                 <div style={{ marginBottom: 14 }}>
                   <label style={labelStyle}>Aadhar Number *</label>
-                  <input name="aadharNumber" value={form.aadharNumber} onChange={set} required placeholder="1234 5678 9012" maxLength={14} style={inputStyle}
+                  <input name="aadharNumber" value={form.aadharNumber} onChange={set} required
+                    placeholder="1234 5678 9012" maxLength={14} style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
 
                 <div style={{ marginBottom: 14 }}>
                   <label style={labelStyle}>Student ID</label>
-                  <input name="studentId" value={form.studentId} onChange={set} placeholder="STU2025001" style={inputStyle}
+                  <input name="studentId" value={form.studentId} onChange={set}
+                    placeholder="STU2025001" style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
 
                 <div style={{ marginBottom: 14 }}>
                   <label style={labelStyle}>Course</label>
-                  <input name="course" value={form.course} onChange={set} placeholder="B.Tech Computer Science" style={inputStyle}
+                  <input name="course" value={form.course} onChange={set}
+                    placeholder="B.Tech Computer Science" style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
@@ -171,43 +233,18 @@ export default function Register() {
                     onFocus={(e) => (e.target.style.borderColor = C.accent)}
                     onBlur={(e)  => (e.target.style.borderColor = C.border)} />
                 </div>
+
+                <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+                  <button type="button" onClick={() => setStep(1)}
+                    style={{ flex: 1, padding: 13, background: "transparent", border: "1px solid " + C.border, borderRadius: 12, color: C.muted, fontWeight: 700, fontSize: 15, cursor: "pointer" }}>
+                    ← Back
+                  </button>
+                  <button type="submit" disabled={loading}
+                    style={{ flex: 2, padding: 13, background: loading ? C.border : "linear-gradient(135deg,#3b82f6,#6366f1)", border: "none", borderRadius: 12, color: "#fff", fontWeight: 700, fontSize: 15, cursor: loading ? "not-allowed" : "pointer" }}>
+                    {loading ? "Creating..." : "Create Account →"}
+                  </button>
+                </div>
               </div>
-            )}
-
-            {/* Buttons */}
-            {form.role === "student" && step === 1 && (
-              <button type="button"
-                onClick={() => {
-                  if (!form.name || !form.email || !form.password || !form.username) {
-                    setError("Please fill all required fields before continuing.");
-                    return;
-                  }
-                  setError("");
-                  setStep(2);
-                }}
-                style={{ width: "100%", padding: 13, marginTop: 8, background: "linear-gradient(135deg,#3b82f6,#6366f1)", border: "none", borderRadius: 12, color: "#fff", fontWeight: 700, fontSize: 15, cursor: "pointer" }}>
-                Continue →
-              </button>
-            )}
-
-            {form.role === "student" && step === 2 && (
-              <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
-                <button type="button" onClick={() => setStep(1)}
-                  style={{ flex: 1, padding: 13, background: "transparent", border: "1px solid " + C.border, borderRadius: 12, color: C.muted, fontWeight: 700, fontSize: 15, cursor: "pointer" }}>
-                  ← Back
-                </button>
-                <button type="submit" disabled={loading}
-                  style={{ flex: 2, padding: 13, background: loading ? C.border : "linear-gradient(135deg,#3b82f6,#6366f1)", border: "none", borderRadius: 12, color: "#fff", fontWeight: 700, fontSize: 15, cursor: loading ? "not-allowed" : "pointer" }}>
-                  {loading ? "Creating..." : "Create Account →"}
-                </button>
-              </div>
-            )}
-
-            {form.role === "admin" && (
-              <button type="submit" disabled={loading}
-                style={{ width: "100%", padding: 13, marginTop: 8, background: loading ? C.border : "linear-gradient(135deg,#3b82f6,#6366f1)", border: "none", borderRadius: 12, color: "#fff", fontWeight: 700, fontSize: 15, cursor: loading ? "not-allowed" : "pointer" }}>
-                {loading ? "Creating..." : "Create Account →"}
-              </button>
             )}
 
           </form>
