@@ -61,7 +61,7 @@ export default function Register() {
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{ width: 56, height: 56, borderRadius: 16, background: "linear-gradient(135deg,#3b82f6,#6366f1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, margin: "0 auto 12px" }}>🏨</div>
           <div style={{ fontSize: 26, fontWeight: 800, color: C.text }}>Create Account</div>
-          <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>Join HostelPro today</div>
+          <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>Join Smart Hostel Reservation Platform today</div>
         </div>
 
         <div style={{ background: C.surface, border: "1px solid " + C.border, borderRadius: 20, padding: 32, boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
