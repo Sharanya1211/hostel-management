@@ -43,7 +43,7 @@ export default function Login() {
       <div style={{ width: "100%", maxWidth: 420, position: "relative" }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div style={{ width: 58, height: 58, borderRadius: 16, background: "linear-gradient(135deg,#3b82f6,#6366f1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, margin: "0 auto 14px" }}>🏨</div>
-          <div style={{ fontSize: 28, fontWeight: 800, color: C.text, letterSpacing: "-0.02em" }}>HostelPro</div>
+          <div style={{ fontSize: 28, fontWeight: 800, color: C.text, letterSpacing: "-0.02em" }}>SMART HOSTEL RESERVATION PLATFORM</div>
           <div style={{ fontSize: 14, color: C.muted, marginTop: 4 }}>Sign in to your account</div>
         </div>
 
